@@ -1,0 +1,17 @@
+# Ignore test exes
+
+# The general pattern is:
+#   <test name>
+#   <test name>.*
+#   !<test name>.hpp
+#   !<test name>.cpp
+
+detail_formatting_saver
+detail_formatting_saver.*
+!detail_formatting_saver.hpp
+!detail_formatting_saver.cpp
+
+detail_write_all
+detail_write_all.*
+!detail_write_all.hpp
+!detail_write_all.cpp
