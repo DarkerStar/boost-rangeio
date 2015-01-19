@@ -5,9 +5,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 // 
 
-#include <algorithm>
 #include <locale>
-#include <functional>
 #include <iterator>
 #include <sstream>
 #include <vector>

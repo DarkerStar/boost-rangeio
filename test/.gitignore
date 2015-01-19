@@ -20,3 +20,13 @@ detail_write_all_delimiter
 detail_write_all_delimiter.*
 !detail_write_all_delimiter.hpp
 !detail_write_all_delimiter.cpp
+
+do_write_iterator_range
+do_write_iterator_range.*
+!do_write_iterator_range.hpp
+!do_write_iterator_range.cpp
+
+do_write_iterator_range_delimiter
+do_write_iterator_range_delimiter.*
+!do_write_iterator_range_delimiter.hpp
+!do_write_iterator_range_delimiter.cpp

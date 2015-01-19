@@ -45,7 +45,7 @@ namespace detail {
 
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
 
-template <typename InputIterator,
+template <typename OutputIterator,
           typename Sentinel,
           typename Delimiter,
           typename CharT,
@@ -53,7 +53,7 @@ template <typename InputIterator,
 void
 write_all(
   std::basic_ostream<CharT, Traits>& out,
-  InputIterator& i,
+  OutputIterator& i,
   Sentinel e,
   Delimiter& delim,
   std::size_t& n)
@@ -61,7 +61,7 @@ write_all(
   BOOST_RANGEIO_WriteAllImpl
 }
 
-template <typename InputIterator,
+template <typename OutputIterator,
           typename Sentinel,
           typename Delimiter,
           typename CharT,
@@ -69,7 +69,7 @@ template <typename InputIterator,
 void
 write_all(
   std::basic_ostream<CharT, Traits>& out,
-  InputIterator& i,
+  OutputIterator& i,
   Sentinel e,
   Delimiter const& delim,
   std::size_t& n)
@@ -77,9 +77,9 @@ write_all(
   BOOST_RANGEIO_WriteAllImpl
 }
 
-#else
+#else // BOOST_NO_CXX11_RVALUE_REFERENCES
 
-template <typename InputIterator,
+template <typename OutputIterator,
           typename Sentinel,
           typename Delimiter,
           typename CharT,
@@ -87,7 +87,7 @@ template <typename InputIterator,
 void
 write_all(
   std::basic_ostream<CharT, Traits>& out,
-  InputIterator& i,
+  OutputIterator& i,
   Sentinel e,
   Delimiter&& delim,
   std::size_t& n)
@@ -102,14 +102,14 @@ write_all(
 // 
 // Underlying write_all() implementation - no delimiter version.
 // 
-template <typename InputIterator,
+template <typename OutputIterator,
           typename Sentinel,
           typename CharT,
           typename Traits>
 void
 write_all(
   std::basic_ostream<CharT, Traits>& out,
-  InputIterator& i,
+  OutputIterator& i,
   Sentinel e,
   std::size_t& n)
 {

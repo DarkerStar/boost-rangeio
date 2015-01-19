@@ -10,6 +10,7 @@
 
 #include <boost/config.hpp>
 
+#include <algorithm>
 #include <locale>
 #include <string>
 
