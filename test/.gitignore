@@ -15,3 +15,8 @@ detail_write_all
 detail_write_all.*
 !detail_write_all.hpp
 !detail_write_all.cpp
+
+detail_write_all_delimiter
+detail_write_all_delimiter.*
+!detail_write_all_delimiter.hpp
+!detail_write_all_delimiter.cpp

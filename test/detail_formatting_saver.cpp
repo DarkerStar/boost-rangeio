@@ -69,7 +69,7 @@ void test_formatting_saver(IOStream& s)
     BOOST_TEST_EQ(a.precision, s.precision());
     BOOST_TEST_EQ(a.width,     s.width());
     
-    boost::rangeio::detail::formatting_saver<char_type, traits_type> const fs(s);
+    ::boost::rangeio::detail::formatting_saver<char_type, traits_type> const fs(s);
     
     // Confirm that no state is changed by the constructor.
     BOOST_TEST_EQ(a.flags,     s.flags());

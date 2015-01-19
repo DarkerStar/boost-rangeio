@@ -6,7 +6,8 @@
 # 
 
 tests_src := detail_formatting_saver.cpp \
-             detail_write_all.cpp
+             detail_write_all.cpp \
+             detail_write_all_delimiter.cpp
 
 # Important settings for portability
 SHELL := /bin/sh
