@@ -13,12 +13,12 @@
 
 #include <boost/core/lightweight_test.hpp>
 
-#include <boost/rangeio/detail/write_all.hpp>
+#include <boost/rangeio/write_iterator_range.hpp>
 
 #include "extras/more_tests.hpp"
 #include "extras/smart_delimiters.hpp"
 
-namespace write_all_delimiter_tests {
+namespace write_iterator_range_delim_imm_tests {
 
 namespace empty_range {
 
@@ -31,14 +31,11 @@ void do_test()
   // Set the width, just to test it later.
   out.width(7);
   
-  std::vector<double>::iterator i = r.begin();
-  std::size_t const n_init = 69;
-  std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), ",", n);
+  ::boost::rangeio::write_iterator_range_result_t<std::vector<double>::iterator> res =
+    ::boost::rangeio::write_iterator_range(out, r.begin(), r.end(), ",");
   
-  BOOST_TEST_EQ(n_init, n);
-  BOOST_TEST(r.begin() == i);
-  BOOST_TEST(r.end() == i);
+  BOOST_TEST(r.end() == res.next);
+  BOOST_TEST_EQ(std::size_t(0), res.count);
   
   BOOST_TEST(bool(out));
   BOOST_TEST(out.str().empty());
@@ -64,14 +61,11 @@ void do_test()
   // Set the width, just to test it later.
   out.width(7);
   
-  std::vector<int>::const_iterator i = r.begin();
-  std::size_t const n_init = 69;
-  std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), ",", n);
+  ::boost::rangeio::write_iterator_range_result_t<std::vector<int>::const_iterator> res =
+    ::boost::rangeio::write_iterator_range(out, r.begin(), r.end(), ",");
   
-  BOOST_TEST_EQ(n_init, n);
-  BOOST_TEST(r.begin() == i);
-  BOOST_TEST(r.end() == i);
+  BOOST_TEST(r.end() == res.next);
+  BOOST_TEST_EQ(std::size_t(0), res.count);
   
   BOOST_TEST(bool(out));
   BOOST_TEST(out.str().empty());
@@ -101,14 +95,12 @@ void do_test()
   out << 'a';
   
   // Do the write
-  int* i = r;
-  std::size_t const n_init = 42;
-  std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, "::", n);
+  ::boost::rangeio::write_iterator_range_result_t<int*> res =
+    ::boost::rangeio::write_iterator_range(out, r, r + r_size, "::");
   
   // Make sure the "out" arguments were properly set
-  BOOST_TEST_EQ(r_size, n - n_init);
-  BOOST_TEST(r + r_size == i);
+  BOOST_TEST(r + r_size == res.next);
+  BOOST_TEST_EQ(r_size, res.count);
   
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
@@ -151,14 +143,12 @@ void do_test()
   out << 'y';
   
   // Do the write
-  unsigned long const* i = r;
-  std::size_t const n_init = 42;
-  std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, '-', n);
+  ::boost::rangeio::write_iterator_range_result_t<unsigned long const*> res =
+    ::boost::rangeio::write_iterator_range(out, r, r + r_size, '-');
   
   // Make sure the "out" arguments were properly set
-  BOOST_TEST_EQ(r_size, n - n_init);
-  BOOST_TEST(r + r_size == i);
+  BOOST_TEST(r + r_size == res.next);
+  BOOST_TEST_EQ(r_size, res.count);
   
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
@@ -193,15 +183,15 @@ void test()
   out.imbue(std::locale::classic());
   out << "{ ";
   
-  std::istream_iterator<int> i(in);
   std::istream_iterator<int> const e;
-  std::size_t const n_init = 32;
-  std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, e, ", ", n);
+  
+  // Do the write
+  ::boost::rangeio::write_iterator_range_result_t<std::istream_iterator<int> > res =
+    ::boost::rangeio::write_iterator_range(out, std::istream_iterator<int>(in), e, ", ");
   
   // Make sure the "out" arguments were properly set
-  BOOST_TEST_EQ(in_size, n - n_init);
-  BOOST_TEST(i == e);
+  BOOST_TEST(e == res.next);
+  BOOST_TEST_EQ(in_size, res.count);
   BOOST_TEST(in.eof());
   
   // Make sure the write happened as it should have
@@ -237,14 +227,12 @@ void test()
   out.setf(std::ios_base::showpoint);
   
   // Do the write
-  double const* i = r;
-  std::size_t const n_init = 13;
-  std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, " | ", n);
+  ::boost::rangeio::write_iterator_range_result_t<double const*> res =
+    ::boost::rangeio::write_iterator_range(out, r, r + r_size, " | ");
   
   // Make sure the "out" arguments were properly set
-  BOOST_TEST_EQ(r_size, n - n_init);
-  BOOST_TEST(r + r_size == i);
+  BOOST_TEST(r + r_size == res.next);
+  BOOST_TEST_EQ(r_size, res.count);
   
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
@@ -267,14 +255,13 @@ void test()
   out.imbue(std::locale::classic());
   
   // Do the write
-  std::string::const_iterator i = r.begin();
-  std::size_t n = 0;
   ::boost::rangeio::test_extras::incrementing_integer_delimiter iid;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), iid, n);
+  ::boost::rangeio::write_iterator_range_result_t<std::string::const_iterator> res =
+    ::boost::rangeio::write_iterator_range(out, r.begin(), r.end(), iid);
   
   // Make sure the "out" arguments were properly set
-  BOOST_TEST_EQ(r.size(), n);
-  BOOST_TEST(r.end() == i);
+  BOOST_TEST(r.end() == res.next);
+  BOOST_TEST_EQ(r.size(), res.count);
   BOOST_TEST_EQ(r.size() - 1, iid.i);
   
   // Make sure the write happened as it should have
@@ -297,13 +284,13 @@ void test()
   out.imbue(std::locale::classic());
   
   // Do the write
-  std::string::const_iterator i = r.begin();
-  std::size_t n = 0;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), ::boost::rangeio::test_extras::incrementing_integer_delimiter(), n);
+  ::boost::rangeio::write_iterator_range_result_t<std::string::const_iterator> res =
+    ::boost::rangeio::write_iterator_range(out, r.begin(), r.end(),
+      ::boost::rangeio::test_extras::incrementing_integer_delimiter());
   
   // Make sure the "out" arguments were properly set
-  BOOST_TEST_EQ(r.size(), n);
-  BOOST_TEST(r.end() == i);
+  BOOST_TEST(r.end() == res.next);
+  BOOST_TEST_EQ(r.size(), res.count);
   
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
@@ -313,11 +300,11 @@ void test()
 } // namespace smart_delimiter_rval
 #endif // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 
-} // namespace write_all_delimiter_tests
+} // namespace write_iterator_range_delim_imm_tests
 
 int main()
 {
-  using namespace write_all_delimiter_tests;
+  using namespace write_iterator_range_delim_imm_tests;
   
   empty_range::test();
   empty_const_range::test();
