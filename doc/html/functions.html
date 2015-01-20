@@ -20,10 +20,209 @@
 
 <h2 class="title"><a name="rangeio.functions"></a>Functions</h2>
 
+<div class="toc">
+  <dl>
+    <dt><span class="section"><a href="rangeio.write_all">write_all&lt;Range&gt;</a></span></dt>
+    <dt><span class="section"><a href="rangeio.write_all">write_all&lt;Range, Delimiter&gt;</a></span></dt>
+    <dt><span class="section"><a href="rangeio.write_all_imm">write_all&lt;Range, CharT, Traits&gt;</a></span></dt>
+    <dt><span class="section"><a href="rangeio.write_all_imm">write_all&lt;Range, Delimiter, CharT, Traits&gt;</a></span></dt>
+    <dt><span class="section"><a href="rangeio.write_iterator_range_imm">write_iterator_range&lt;InputIterator, Sentinel, CharT, Traits&gt;</a></span></dt>
+    <dt><span class="section"><a href="rangeio.write_iterator_range_imm">write_iterator_range&lt;InputIterator, Sentinel, Delimiter, CharT, Traits&gt;</a></span></dt>
+  </dl>
+</div>
+
+<section>
+<h3 class="title"><a name="rangeio.write_all"></a>
+  write_all&lt;Range&gt;<br />
+  write_all&lt;Range, Delimiter&gt;
+</h3>
+</section>
+
+<hr />
+
+<section>
+<h3 class="title"><a name="rangeio.write_all_imm"></a>
+  write_all&lt;Range, CharT, Traits&gt;<br />
+  write_all&lt;Range, Delimiter, CharT, Traits&gt;
+</h3>
+</section>
+
+<hr />
+
+<section>
+<h3 class="title"><a name="rangeio.write_iterator_range_imm"></a>
+  write_iterator_range&lt;InputIterator, Sentinel, CharT, Traits&gt;<br />
+  write_iterator_range&lt;InputIterator, Sentinel, Delimiter, CharT, Traits&gt;
+</h3>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_imm.synopsis"></a>Synopsis</h4>
+
+<pre class="programlisting"><code>template &lt;typename InputIterator, typename Sentinel, typename CharT, typename Traits&gt;
+  write_iterator_range_result_t&lt;InputIterator&gt;
+    write_iterator_range(std::basic_ostream&lt;CharT, Traits&gt;&amp; out, InputIterator first, Sentinel last);
+
+// C++11 or better
+template &lt;typename InputIterator, typename Sentinel, typename Delimiter, typename CharT, typename Traits&gt;
+  write_iterator_range_result_t&lt;InputIterator&gt;
+    write_iterator_range(std::basic_ostream&lt;CharT, Traits&gt;&amp; out, InputIterator first, Sentinel last, Delimiter&amp;&amp; delim);
+
+// C++98 only
+template &lt;typename InputIterator, typename Sentinel, typename Delimiter, typename CharT, typename Traits&gt;
+  write_iterator_range_result_t&lt;InputIterator&gt;
+    write_iterator_range(std::basic_ostream&lt;CharT, Traits&gt;&amp; out, InputIterator first, Sentinel last, Delimiter&amp; delim);
+template &lt;typename InputIterator, typename Sentinel, typename Delimiter, typename CharT, typename Traits&gt;
+  write_iterator_range_result_t&lt;InputIterator&gt;
+    write_iterator_range(std::basic_ostream&lt;CharT, Traits&gt;&amp; out, InputIterator first, Sentinel last, Delimiter const&amp; delim);</code></pre>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_imm.description"></a>Description</h4>
+
+<p>
+  The non-delimiter version writes each element of the sequence defined by [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) to the output stream <code class="computeroutput">out</code>, using the insertion operatior (<code class="computeroutput">operator&lt;&lt;</code>).
+  The delimiter version does the same, but between each element it writes <code class="computeroutput">delim</code> (using <code class="computeroutput">out &lt;&lt; delim</code>).
+  Both versions return a <a href="types.html#rangeio.write_iterator_range_result_t"><code class="computeroutput">write_iterator_range_result_t&lt;InputIterator&gt;</code></a> with details about the write.
+</p>
+
+<p>
+  Writing stops immediately when the output stream is <code class="computeroutput">false</code> (after conversion to <code class="computeroutput">bool</code>).
+  Otherwise, it continues until the iterator to the next element compares equal to the sentinel object.
+</p>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_imm.header"></a>Header</h4>
+
+<p>
+  <code class="filename"><a href="../../include/boost/rangeio/write_iterator_range.hpp" target="_top">#include &lt;boost/rangeio/write_iterator_range.hpp&gt;</a></code>
+</p>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_result_t.type_requirements"></a>Type requirements</h4>
+
+<div class="informaltable">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Type requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="computeroutput">InputIterator</code></td>
+      <td>Must satisfy <a href="http://en.cppreference.com/w/cpp/concept/InputIterator" target="_top">InputIterator</a> concept.</td>
+    </tr>
+    <tr>
+      <td><code class="computeroutput">Sentinel</code></td>
+      <td>Must be EqualityComparable with <code class="computeroutput">InputIterator</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="computeroutput">Delimiter</code></td>
+      <td>Objects of type <code class="computeroutput">Delimiter</code> must be streamable to objects of type <code class="computeroutput">std::basic_ostream&lt;CharT, Traits&gt;</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="computeroutput">CharT</code></td>
+      <td>Must be usable in <code class="computeroutput">std::basic_ostream&lt;CharT, Traits&gt;</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="computeroutput">Traits</code></td>
+      <td>Must be usable in <code class="computeroutput">std::basic_ostream&lt;CharT, Traits&gt;</code>.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_result_t.arguments"></a>Arguments</h4>
+
+<div class="informaltable">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="computeroutput">out</code></td>
+      <td><code class="computeroutput">std::basic_ostream&lt;CharT, Traits&gt;&amp;</code></td>
+      <td>Reference to an output stream that the elements of the sequence defined by [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) will be written to.</td>
+    </tr>
+    <tr>
+      <td><code class="computeroutput">first</code></td>
+      <td><code class="computeroutput">InputIterator</code></td>
+      <td>Iterator to the start of the sequence to be written.</td>
+    </tr>
+    <tr>
+      <td><code class="computeroutput">last</code></td>
+      <td><code class="computeroutput">Sentinel</code></td>
+      <td>Sentinel object used to detect (via equality comparison with an iterator) when the end of the sequence is reached.</td>
+    </tr>
+    <tr>
+      <td><code class="computeroutput">delim</code></td>
+      <td><code class="computeroutput">Delimiter</code></td>
+      <td>Optional delimiter object to be written between each element of the input sequence.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_imm.preconditions"></a>Preconditions</h4>
+
+<p>
+  [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) must describe a valid sequence.
+</p>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_imm.example"></a>Example</h4>
+
+<pre class="programlisting"><code>#include &lt;boost/rangeio/write_iterator_range.hpp&gt;
+
+void f()
+{
+  std::vector&lt;int&gt; v{1, 2, 3, 4, 5};
+  
+  // Of course, it would be better to use auto
+  boost::rangeio::write_iterator_range_result_t&lt;std::vector&lt;int&gt;::iterator&gt; res1 =
+    boost::rangeio::write_iterator_range(std::cout, v.begin(), v.end()); // writes "12345" to cout
+  
+  assert(res1.count == 5); // 5 elements were written
+  assert(res1.next == v.end()); // all elements were written
+  
+  using boost::rangeio::write_iterator_range;
+  auto res2 = write_iterator_range(std::cout, v.begin() + 1, v.begin() + 4, ", "); // writes "2, 3, 4" to cout
+  
+  assert(res2.count == 3); // 3 elements were written
+  assert(res2.next == (v.begin() + 4)); // all elements were written
+}</code></pre>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_imm.cpp98_compatibility"></a>C++98 compatibility</h4>
+
+<p>
+  The only limitation in C++98 is that if the delimiter is an rvalue, it will be <code class="computeroutput">const</code>.
+  Non-<code class="computeroutput">const</code> rvalue delimiters are not supported in C++98.
+</p>
+</section>
+</section>
+
 
 <p><small>Last revised: $Date</small></p>
-<div class="copyright-footer"></div>
-<hr>
+<div class="copyright-footer">
+  Copyright © 2015 Mark A. Gibbs
+  <p>Distributed under the <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">Boost Software License, Version 1.0</a></p>
+</div>
+<hr />
 <div class="spirit-nav"><a accesskey="p" href="types.html"><img src="images/prev.png" alt="Prev"/></a><a accesskey="u" href="index.html"><img src="images/up.png" alt="Up"/></a><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"/></a><a accesskey="n" href="rationale.html"><img src="images/next.png" alt="Next"/></a></div>
 </body>
 </html>

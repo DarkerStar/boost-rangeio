@@ -20,10 +20,150 @@
 
 <h2 class="title"><a name="rangeio.types"></a>Types</h2>
 
+<div class="toc">
+  <dl>
+    <dt><span class="section"><a href="#rangeio.write_all_t">write_all_t&lt;Range, Delimiter&gt;</a></span></dt>
+    <dt><span class="section"><a href="#rangeio.write_all_result_t">write_all_result_t&lt;Range&gt;</a></span></dt>
+    <dt><span class="section"><a href="#rangeio.write_iterator_range_result_t">write_iterator_range_result_t&lt;InputIterator&gt;</a></span></dt>
+  </dl>
+</div>
+
+<section>
+<h3 class="title"><a name="rangeio.write_all_t"></a>write_all_t&lt;Range, Delimiter&gt;</h3>
+</section>
+
+<hr />
+
+<section>
+<h3 class="title"><a name="rangeio.write_all_result_t"></a>write_all_result_t&lt;Range&gt;</h3>
+</section>
+
+<hr />
+
+<section>
+<h3 class="title"><a name="rangeio.write_iterator_range_result_t"></a>write_iterator_range_result_t&lt;InputIterator&gt;</h3>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_result_t.description"></a>Description</h4>
+
+<p>
+  This is the type returned by the immediate versions of <a href="functions.html#rangeio.write_iterator_range_imm"><code class="computeroutput">write_iterator_range()</code></a>.
+  It contains members that describe how many elements were written, and an iterator to the next element that would be written (or the end iterator if there are no more elements to write).
+</p>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_result_t.header"></a>Header</h4>
+
+<p>
+  <code class="filename"><a href="../../include/boost/rangeio/write_iterator_range.hpp" target="_top">#include &lt;boost/rangeio/write_iterator_range.hpp&gt;</a></code>
+</p>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_result_t.type_requirements"></a>Type requirements</h4>
+
+<div class="informaltable">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Type requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="computeroutput">InputIterator</code></td>
+      <td>Must satisfy <a href="http://en.cppreference.com/w/cpp/concept/InputIterator" target="_top">InputIterator</a> concept.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_result_t.member_types"></a>Member types</h4>
+
+<div class="informaltable">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Defined as</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="computeroutput">iterator</code></td>
+      <td><code class="computeroutput">InputIterator</code></td>
+      <td>The iterator type.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_result_t.data_members"></a>Data members</h4>
+
+<div class="informaltable">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="computeroutput">count</code></td>
+      <td><code class="computeroutput">std::size_t</code></td>
+      <td>The number of elements that were written in the output operation.</td>
+    </tr>
+    <tr>
+      <td><code class="computeroutput">next</code></td>
+      <td><code class="computeroutput">iterator</code></td>
+      <td>An iterator to the next element to be written if the write was incomplete, or the end iterator if it was complete.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4 class="title"><a name="rangeio.write_iterator_range_result_t.example"></a>Example</h4>
+
+<pre class="programlisting"><code>#include &lt;boost/rangeio/write_iterator_range.hpp&gt;
+
+void f()
+{
+  std::vector&lt;int&gt; v{1, 2, 3, 4, 5};
+  
+  // Of course, it would be better to use auto
+  boost::rangeio::write_iterator_range_result_t&lt;std::vector&lt;int&gt;::iterator&gt; res1 =
+    boost::rangeio::write_iterator_range(std::cout, v.begin(), v.end()); // writes "12345" to cout
+  
+  assert(res1.count == 5); // 5 elements were written
+  assert(res1.next == v.end()); // all elements were written
+  
+  using boost::rangeio::write_iterator_range;
+  auto res2 = write_iterator_range(std::cout, v.begin() + 1, v.begin() + 4, ", "); // writes "2, 3, 4" to cout
+  
+  assert(res2.count == 3); // 3 elements were written
+  assert(res2.next == (v.begin() + 4)); // all elements were written
+}</code></pre>
+</section>
+</section>
+
 
 <p><small>Last revised: $Date</small></p>
-<div class="copyright-footer"></div>
-<hr>
+<div class="copyright-footer">
+  Copyright © 2015 Mark A. Gibbs
+  <p>Distributed under the <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">Boost Software License, Version 1.0</a></p>
+</div>
+<hr />
 <div class="spirit-nav"><a accesskey="p" href="tutorial.html"><img src="images/prev.png" alt="Prev"/></a><a accesskey="u" href="index.html"><img src="images/up.png" alt="Up"/></a><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"/></a><a accesskey="n" href="functions.html"><img src="images/next.png" alt="Next"/></a></div>
 </body>
 </html>
