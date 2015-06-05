@@ -11,15 +11,15 @@ detail_formatting_saver.*
 !detail_formatting_saver.hpp
 !detail_formatting_saver.cpp
 
-detail_write_all
-detail_write_all.*
-!detail_write_all.hpp
-!detail_write_all.cpp
+detail_write
+detail_write.*
+!detail_write.hpp
+!detail_write.cpp
 
-detail_write_all_delim
-detail_write_all_delim.*
-!detail_write_all_delim.hpp
-!detail_write_all_delim.cpp
+detail_write_delim
+detail_write_delim.*
+!detail_write_delim.hpp
+!detail_write_delim.cpp
 
 write_iterator_range_imm
 write_iterator_range_imm.*

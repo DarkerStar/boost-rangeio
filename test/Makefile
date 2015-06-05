@@ -6,8 +6,8 @@
 # 
 
 tests_src := detail_formatting_saver.cpp \
-             detail_write_all.cpp \
-             detail_write_all_delim.cpp \
+             detail_write.cpp \
+             detail_write_delim.cpp \
              write_iterator_range_imm.cpp \
              write_iterator_range_delim_imm.cpp
 
