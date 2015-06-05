@@ -28,28 +28,19 @@ template <typename CharT, typename Traits>
 class formatting_saver
 {
 public:
-  explicit formatting_saver(std::basic_ios<CharT, Traits>& s) :
+  explicit formatting_saver(::std::basic_ios<CharT, Traits>& s) :
     stream_(s),
-    flags_(s.flags()),
-    width_(s.width()),
-    precision_(s.precision()),
-    fill_(s.fill())
+    width_(s.width())
   {}
   
   void restore() const
   {
-    stream_.flags(flags_);
-    stream_.fill(fill_);
-    stream_.precision(precision_);
     stream_.width(width_);
   }
   
 private:
   std::basic_ios<CharT, Traits>& stream_;
-  typename std::basic_ios<CharT, Traits>::fmtflags const flags_;
   std::streamsize const width_;
-  std::streamsize const precision_;
-  CharT const fill_;
 };
 
 } // namespace detail
