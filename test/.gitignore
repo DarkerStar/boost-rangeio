@@ -16,17 +16,17 @@ detail_write.*
 !detail_write.hpp
 !detail_write.cpp
 
-detail_write_delim
-detail_write_delim.*
-!detail_write_delim.hpp
-!detail_write_delim.cpp
+detail_write_delimiter
+detail_write_delimiter.*
+!detail_write_delimiter.hpp
+!detail_write_delimiter.cpp
 
-write_iterator_range_imm
-write_iterator_range_imm.*
-!write_iterator_range_imm.hpp
-!write_iterator_range_imm.cpp
+write_iterator_range_immediate
+write_iterator_range_immediate.*
+!write_iterator_range_immediate.hpp
+!write_iterator_range_immediate.cpp
 
-write_iterator_range_delim_imm
-write_iterator_range_delim_imm.*
-!write_iterator_range_delim_imm.hpp
-!write_iterator_range_delim_imm.cpp
+write_iterator_range_delimiter_immediate
+write_iterator_range_delimiter_immediate.*
+!write_iterator_range_delimiter_immediate.hpp
+!write_iterator_range_delimiter_immediate.cpp
