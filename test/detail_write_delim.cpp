@@ -35,15 +35,15 @@ namespace empty_range {
 template <typename CharT>
 void do_test()
 {
-  std::vector<double> r;
-  std::basic_ostringstream<CharT> out;
+  ::std::vector<double> r;
+  ::std::basic_ostringstream<CharT> out;
   
   // Set the width, just to test it later.
   out.width(7);
   
-  std::vector<double>::iterator i = r.begin();
-  std::size_t const n_init = 69;
-  std::size_t n = n_init;
+  ::std::vector<double>::iterator i = r.begin();
+  ::std::size_t const n_init = 69;
+  ::std::size_t n = n_init;
   ::boost::rangeio::detail::write_impl(out, i, r.end(), ",", n);
   
   BOOST_TEST_EQ(n_init, n);
@@ -52,7 +52,7 @@ void do_test()
   
   BOOST_TEST(bool(out));
   BOOST_TEST(out.str().empty());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
 }
 
 void test()
@@ -70,15 +70,15 @@ namespace empty_const_range {
 template <typename CharT>
 void do_test()
 {
-  std::vector<int> const r;
-  std::basic_ostringstream<CharT> out;
+  ::std::vector<int> const r;
+  ::std::basic_ostringstream<CharT> out;
   
   // Set the width, just to test it later.
   out.width(7);
   
-  std::vector<int>::const_iterator i = r.begin();
-  std::size_t const n_init = 69;
-  std::size_t n = n_init;
+  ::std::vector<int>::const_iterator i = r.begin();
+  ::std::size_t const n_init = 69;
+  ::std::size_t n = n_init;
   ::boost::rangeio::detail::write_impl(out, i, r.end(), ",", n);
   
   BOOST_TEST_EQ(n_init, n);
@@ -87,7 +87,7 @@ void do_test()
   
   BOOST_TEST(bool(out));
   BOOST_TEST(out.str().empty());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
 }
 
 void test()
@@ -108,17 +108,17 @@ void do_test()
 {
   // Prepare the range to be written
   int r[] = { 1, 1, 2, 3, 5, 8 };
-  std::size_t const r_size = sizeof(r) / sizeof(r[0]);
+  ::std::size_t const r_size = sizeof(r) / sizeof(r[0]);
   
   // Prepare the output stream
-  std::basic_ostringstream<CharT> out;
-  out.imbue(std::locale::classic());
+  ::std::basic_ostringstream<CharT> out;
+  out.imbue(::std::locale::classic());
   out << 'a';
   
   // Do the write
   int* i = r;
-  std::size_t const n_init = 42;
-  std::size_t n = n_init;
+  ::std::size_t const n_init = 42;
+  ::std::size_t n = n_init;
   ::boost::rangeio::detail::write_impl(out, i, i + r_size, "::", n);
   
   // Make sure the "out" arguments were properly set
@@ -128,7 +128,7 @@ void do_test()
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
   BOOST_RANGEIO_TEST_STR_EQ("a1::1::2::3::5::8", out.str());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
   
   // Make sure the input range wasn't changed
   BOOST_TEST_EQ(1, r[0]);
@@ -161,17 +161,17 @@ void do_test()
 {
   // Prepare the range to be written
   unsigned long const r[] = { 867, 5309, 555, 2368 };
-  std::size_t const r_size = sizeof(r) / sizeof(r[0]);
+  ::std::size_t const r_size = sizeof(r) / sizeof(r[0]);
   
   // Prepare the output stream
-  std::basic_ostringstream<CharT> out;
-  out.imbue(std::locale::classic());
+  ::std::basic_ostringstream<CharT> out;
+  out.imbue(::std::locale::classic());
   out << 'y';
   
   // Do the write
   unsigned long const* i = r;
-  std::size_t const n_init = 42;
-  std::size_t n = n_init;
+  ::std::size_t const n_init = 42;
+  ::std::size_t n = n_init;
   char const delim = '-';
   ::boost::rangeio::detail::write_impl(out, i, i + r_size, delim, n);
   
@@ -182,7 +182,7 @@ void do_test()
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
   BOOST_RANGEIO_TEST_STR_EQ("y867-5309-555-2368", out.str());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
   
   // Make sure the stream is still good for future writes
   BOOST_TEST(out << 'q');
@@ -204,20 +204,20 @@ namespace input_iterator_range {
 void test()
 {
   // Prepare the range to be written
-  std::istringstream in("2 4 6 8");
-  in.imbue(std::locale::classic());
+  ::std::istringstream in("2 4 6 8");
+  in.imbue(::std::locale::classic());
   int const in_data[] = { 2, 4, 8, 8 };
-  std::size_t const in_size = sizeof(in_data) / sizeof(in_data[0]);
+  ::std::size_t const in_size = sizeof(in_data) / sizeof(in_data[0]);
   
   // Prepare the output stream
-  std::ostringstream out;
-  out.imbue(std::locale::classic());
+  ::std::ostringstream out;
+  out.imbue(::std::locale::classic());
   out << "{ ";
   
-  std::istream_iterator<int> i(in);
-  std::istream_iterator<int> const e;
-  std::size_t const n_init = 32;
-  std::size_t n = n_init;
+  ::std::istream_iterator<int> i(in);
+  ::std::istream_iterator<int> const e;
+  ::std::size_t const n_init = 32;
+  ::std::size_t n = n_init;
   ::boost::rangeio::detail::write_impl(out, i, e, ", ", n);
   
   // Make sure the "out" arguments were properly set
@@ -227,7 +227,7 @@ void test()
   
   // Make sure the write happened as it should have
   BOOST_TEST_EQ("{ 2, 4, 6, 8", out.str());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
   
   // Make sure the stream is still good for future writes
   BOOST_TEST(bool(out));
@@ -245,24 +245,24 @@ void test()
 {
   // Prepare the range to be written
   double const r[] = { 1.0, -2.3, 6.66666, -0.12345, -1.2345 };
-  std::size_t const r_size = sizeof(r) / sizeof(r[0]);
+  ::std::size_t const r_size = sizeof(r) / sizeof(r[0]);
   
   // Prepare the output stream
-  std::ostringstream out;
-  out.imbue(std::locale::classic());
+  ::std::ostringstream out;
+  out.imbue(::std::locale::classic());
   out << "{ ";
   
-  out.imbue(std::locale::classic());
+  out.imbue(::std::locale::classic());
   out.width(8);
   out.precision(3);
   out.fill('_');
-  out.setf(std::ios_base::internal, std::ios_base::adjustfield);
-  out.setf(std::ios_base::showpoint);
+  out.setf(::std::ios_base::internal, ::std::ios_base::adjustfield);
+  out.setf(::std::ios_base::showpoint);
   
   // Do the write
   double const* i = r;
-  std::size_t const n_init = 13;
-  std::size_t n = n_init;
+  ::std::size_t const n_init = 13;
+  ::std::size_t n = n_init;
   ::boost::rangeio::detail::write_impl(out, i, i + r_size, " | ", n);
   
   // Make sure the "out" arguments were properly set
@@ -271,7 +271,7 @@ void test()
   
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
   BOOST_TEST(out << " }");
   BOOST_TEST_EQ("{ ____1.00 | -___2.30 | ____6.67 | -__0.123 | -___1.23 }", out.str());
 }
@@ -284,15 +284,15 @@ namespace smart_delimiter {
 void test()
 {
   // Prepare the range to be written
-  std::string const r = "abcdef";
+  ::std::string const r = "abcdef";
   
   // Prepare the output stream
-  std::ostringstream out;
-  out.imbue(std::locale::classic());
+  ::std::ostringstream out;
+  out.imbue(::std::locale::classic());
   
   // Do the write
-  std::string::const_iterator i = r.begin();
-  std::size_t n = 0;
+  ::std::string::const_iterator i = r.begin();
+  ::std::size_t n = 0;
   ::boost::rangeio::test_extras::incrementing_integer_delimiter iid;
   ::boost::rangeio::detail::write_impl(out, i, r.end(), iid, n);
   

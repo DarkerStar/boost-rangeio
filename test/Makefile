@@ -33,6 +33,7 @@ all : $(tests)
 # Make 'check' target (makes and runs all tests)
 ${runtests}: run_% : %
 	-./$*
+	-@echo ""
 
 check : ${runtests}
 

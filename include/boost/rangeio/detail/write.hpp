@@ -49,7 +49,7 @@ void
 write_impl(
   ::std::basic_ostream<CharT, Traits>& out,
   InputIterator& i,
-  Sentinel const e,
+  Sentinel const& e,
   ::std::size_t& n)
 {
   // Only bother to attempt writing if the range is empty (i == e) or the
@@ -113,7 +113,7 @@ void
 write_impl(
   ::std::basic_ostream<CharT, Traits>& out,
   InputIterator& i,
-  Sentinel const e,
+  Sentinel const& e,
   Delimiter& delim,
   ::std::size_t& n)
 {

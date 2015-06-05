@@ -5,6 +5,21 @@
 // (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 // 
 
+// This test covers the immediate version of write_iterator_range, without
+// delimiters.
+// 
+// The tests must confirm that writes are done correctly and that formatting is
+// preserved between elements.
+// 
+// This test requires C++11.
+
+#include <boost/config.hpp>
+
+#ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
+#   include <iostream>
+int main() { ::std::cout << "Not supported in C++98.\n"; }
+#else
+
 #include <iterator>
 #include <sstream>
 #include <vector>
@@ -17,26 +32,28 @@
 
 namespace write_iterator_range_imm_tests {
 
+// Confirm that empty ranges produce no output, and that they leave everything
+// in the expected state.
 namespace empty_range {
 
 template <typename CharT>
 void do_test()
 {
-  std::vector<double> r;
-  std::basic_ostringstream<CharT> out;
+  ::std::vector<double> r;
+  ::std::basic_ostringstream<CharT> out;
   
   // Set the width, just to test it later.
   out.width(7);
   
-  ::boost::rangeio::write_iterator_range_result_t<std::vector<double>::iterator> res =
+  ::boost::rangeio::write_iterator_range_result_t<::std::vector<double>::iterator> res =
     ::boost::rangeio::write_iterator_range(out, r.begin(), r.end());
   
   BOOST_TEST(r.end() == res.next);
-  BOOST_TEST_EQ(std::size_t(0), res.count);
+  BOOST_TEST_EQ(::std::size_t(0), res.count);
   
   BOOST_TEST(bool(out));
   BOOST_TEST(out.str().empty());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
 }
 
 void test()
@@ -47,26 +64,28 @@ void test()
 
 } // namespace empty_range
 
+// Confirm that empty ranges produce no output, and that they leave everything
+// in the expected state.
 namespace empty_const_range {
 
 template <typename CharT>
 void do_test()
 {
-  std::vector<double> const r;
-  std::basic_ostringstream<CharT> out;
+  ::std::vector<double> const r;
+  ::std::basic_ostringstream<CharT> out;
   
   // Set the width, just to test it later.
   out.width(7);
   
-  ::boost::rangeio::write_iterator_range_result_t<std::vector<double>::const_iterator> res =
+  ::boost::rangeio::write_iterator_range_result_t<::std::vector<double>::const_iterator> res =
     ::boost::rangeio::write_iterator_range(out, r.begin(), r.end());
   
   BOOST_TEST(r.end() == res.next);
-  BOOST_TEST_EQ(std::size_t(0), res.count);
+  BOOST_TEST_EQ(::std::size_t(0), res.count);
   
   BOOST_TEST(bool(out));
   BOOST_TEST(out.str().empty());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
 }
 
 void test()
@@ -77,6 +96,8 @@ void test()
 
 } // namespace empty_const_range
 
+// Confirm that ranges are written properly, and that they leave everything
+// in the expected state.
 namespace normal_range {
 
 template <typename CharT>
@@ -84,11 +105,11 @@ void do_test()
 {
   // Prepare the range to be written
   int r[] = { 1, 1, 2, 3, 5, 8 };
-  std::size_t const r_size = sizeof(r) / sizeof(r[0]);
+  ::std::size_t const r_size = sizeof(r) / sizeof(r[0]);
   
   // Prepare the output stream
-  std::basic_ostringstream<CharT> out;
-  out.imbue(std::locale::classic());
+  ::std::basic_ostringstream<CharT> out;
+  out.imbue(::std::locale::classic());
   out << 'a';
   
   // Do the write
@@ -102,7 +123,7 @@ void do_test()
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
   BOOST_RANGEIO_TEST_STR_EQ("a112358", out.str());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
   
   // Make sure the input range wasn't changed
   BOOST_TEST_EQ(1, r[0]);
@@ -125,6 +146,8 @@ void test()
 
 } // namespace normal_range
 
+// Confirm that ranges are written properly, and that they leave everything
+// in the expected state.
 namespace normal_const_range {
 
 template <typename CharT>
@@ -132,11 +155,11 @@ void do_test()
 {
   // Prepare the range to be written
   unsigned long const r[] = { 867, 5309, 555, 2368 };
-  std::size_t const r_size = sizeof(r) / sizeof(r[0]);
+  ::std::size_t const r_size = sizeof(r) / sizeof(r[0]);
   
   // Prepare the output stream
-  std::basic_ostringstream<CharT> out;
-  out.imbue(std::locale::classic());
+  ::std::basic_ostringstream<CharT> out;
+  out.imbue(::std::locale::classic());
   out << 'y';
   
   // Do the write
@@ -150,7 +173,7 @@ void do_test()
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
   BOOST_RANGEIO_TEST_STR_EQ("y86753095552368", out.str());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
   
   // Make sure the stream is still good for future writes
   BOOST_TEST(out << 'q');
@@ -165,26 +188,28 @@ void test()
 
 } // namespace normal_const_range
 
+// Confirm that everything works properly, even when the source range uses
+// the most restricted class of iterators (InputIterators).
 namespace input_iterator_range {
 
 void test()
 {
   // Prepare the range to be written
-  std::istringstream in("2 4 6 8");
-  in.imbue(std::locale::classic());
+  ::std::istringstream in("2 4 6 8");
+  in.imbue(::std::locale::classic());
   int const in_data[] = { 2, 4, 8, 8 };
   std::size_t const in_size = sizeof(in_data) / sizeof(in_data[0]);
   
   // Prepare the output stream
-  std::ostringstream out;
-  out.imbue(std::locale::classic());
+  ::std::ostringstream out;
+  out.imbue(::std::locale::classic());
   out << "pre";
   
-  std::istream_iterator<int> const e;
+  ::std::istream_iterator<int> const e;
   
   // Do the write
-  ::boost::rangeio::write_iterator_range_result_t<std::istream_iterator<int> > res =
-    ::boost::rangeio::write_iterator_range(out, std::istream_iterator<int>(in), e);
+  ::boost::rangeio::write_iterator_range_result_t<::std::istream_iterator<int> > res =
+    ::boost::rangeio::write_iterator_range(out, ::std::istream_iterator<int>(in), e);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST(e == res.next);
@@ -194,7 +219,7 @@ void test()
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
   BOOST_TEST_EQ("pre2468", out.str());
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
   
   // Make sure the stream is still good for future writes
   BOOST_TEST(out << "post");
@@ -203,25 +228,27 @@ void test()
 
 } // namespace input_iterator_range
 
+// Confirm that ranges are written properly, and that formatting is preserved
+// across elements.
 namespace formatting {
 
 void test()
 {
   // Prepare the range to be written
   int const r[] = { 0x0287, 0x071A, 0x00E6, 0x001A, 0x029E };
-  std::size_t const r_size = sizeof(r) / sizeof(r[0]);
+  ::std::size_t const r_size = sizeof(r) / sizeof(r[0]);
   
   // Prepare the output stream
-  std::ostringstream out;
-  out.imbue(std::locale::classic());
+  ::std::ostringstream out;
+  out.imbue(::std::locale::classic());
   out << "{ ";
   
   out.width(7);
   out.fill('.');
-  out.setf(std::ios_base::hex, std::ios_base::basefield);
-  out.setf(std::ios_base::left, std::ios_base::adjustfield);
-  out.setf(std::ios_base::uppercase);
-  out.setf(std::ios_base::showbase);
+  out.setf(::std::ios_base::hex, ::std::ios_base::basefield);
+  out.setf(::std::ios_base::left, ::std::ios_base::adjustfield);
+  out.setf(::std::ios_base::uppercase);
+  out.setf(::std::ios_base::showbase);
   
   // Do the write
   ::boost::rangeio::write_iterator_range_result_t<int const*> res =
@@ -233,7 +260,7 @@ void test()
   
   // Make sure the write happened as it should have
   BOOST_TEST(bool(out));
-  BOOST_TEST_EQ(std::streamsize(0), out.width());
+  BOOST_TEST_EQ(::std::streamsize(0), out.width());
   BOOST_TEST(out << " }");
   BOOST_TEST_EQ("{ " "0X287.." "0X71A.." "0XE6..." "0X1A..." "0X29E.." " }", out.str());
 }
@@ -258,3 +285,5 @@ int main()
   
   return boost::report_errors();
 }
+
+#endif  // BOOST_NO_CXX11_RVALUE_REFERENCES
