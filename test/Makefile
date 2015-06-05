@@ -9,7 +9,9 @@ tests_src := detail_formatting_saver.cpp \
              detail_write.cpp \
              detail_write_delimiter.cpp \
              write_iterator_range_immediate.cpp \
-             write_iterator_range_delimiter_immediate.cpp
+             write_iterator_range_delimiter_immediate.cpp \
+             write_iterator_range.cpp \
+             write_iterator_range_delimiter.cpp
 
 # Important settings for portability
 SHELL := /bin/sh

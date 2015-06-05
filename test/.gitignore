@@ -30,3 +30,13 @@ write_iterator_range_delimiter_immediate
 write_iterator_range_delimiter_immediate.*
 !write_iterator_range_delimiter_immediate.hpp
 !write_iterator_range_delimiter_immediate.cpp
+
+write_iterator_range
+write_iterator_range.*
+!write_iterator_range.hpp
+!write_iterator_range.cpp
+
+write_iterator_range_delimiter
+write_iterator_range_delimiter.*
+!write_iterator_range_delimiter.hpp
+!write_iterator_range_delimiter.cpp

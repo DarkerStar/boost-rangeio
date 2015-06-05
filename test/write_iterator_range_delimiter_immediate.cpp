@@ -33,7 +33,7 @@ int main() { ::std::cout << "Not supported in C++98.\n"; }
 #include "extras/more_tests.hpp"
 #include "extras/smart_delimiters.hpp"
 
-namespace write_iterator_range_delim_imm_tests {
+namespace write_iterator_range_delimiter_immediate_tests {
 
 // Confirm that empty ranges produce no output, and that they leave everything
 // in the expected state. Delimiters should not be written.
@@ -329,11 +329,11 @@ void test()
 
 } // namespace smart_delimiter_rval
 
-} // namespace write_iterator_range_delim_imm_tests
+} // namespace write_iterator_range_delimiter_immediate_tests
 
 int main()
 {
-  using namespace write_iterator_range_delim_imm_tests;
+  using namespace write_iterator_range_delimiter_immediate_tests;
   
   empty_range::test();
   empty_const_range::test();

@@ -30,7 +30,7 @@ int main() { ::std::cout << "Not supported in C++98.\n"; }
 
 #include "extras/more_tests.hpp"
 
-namespace write_iterator_range_imm_tests {
+namespace write_iterator_range_immediate_tests {
 
 // Confirm that empty ranges produce no output, and that they leave everything
 // in the expected state.
@@ -267,11 +267,11 @@ void test()
 
 } // namespace formatting
 
-} // namespace write_iterator_range_imm_tests
+} // namespace write_iterator_range_immediate_tests
 
 int main()
 {
-  using namespace write_iterator_range_imm_tests;
+  using namespace write_iterator_range_immediate_tests;
   
   empty_range::test();
   empty_const_range::test();
