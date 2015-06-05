@@ -5,6 +5,12 @@
 // (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 // 
 
+// This test covers the internal formatting saver that stores the formatting
+// state of an istream or ostream at the beginning of a read/write operation,
+// and restores it before each element after the first.
+// 
+// This test must work even in C++98 mode.
+
 #include <sstream>
 
 #include <boost/core/lightweight_test.hpp>
@@ -38,7 +44,7 @@ void test_formatting_saver(IOStream& s)
   typedef typename IOStream::traits_type traits_type;
   
   stream_state<char_type> const a(10);
-  stream_state<char_type> const b(8);
+  stream_state<char_type> const b(2);
   
   s.width(a.width);
   

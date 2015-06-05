@@ -5,6 +5,15 @@
 // (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 // 
 
+// This test covers the internal write implementation used by all public write
+// operations in the library - specifically the version that does not use
+// delimiters.
+// 
+// The tests must confirm that writes are done correctly and that formatting is
+// preserved between elements.
+// 
+// This test must work even in C++98 mode.
+
 #include <locale>
 #include <iterator>
 #include <sstream>
@@ -18,6 +27,8 @@
 
 namespace write_impl_tests {
 
+// Confirm that empty ranges produce no output, and that they leave everything
+// in the expected state.
 namespace empty_range {
 
 template <typename CharT>
@@ -51,6 +62,8 @@ void test()
 
 } // namespace empty_range
 
+// Confirm that empty ranges produce no output, and that they leave everything
+// in the expected state.
 namespace empty_const_range {
 
 template <typename CharT>
@@ -84,6 +97,8 @@ void test()
 
 } // namespace empty_const_range
 
+// Confirm that ranges are written properly, and that they leave everything
+// in the expected state.
 namespace normal_range {
 
 template <typename CharT>
@@ -134,6 +149,8 @@ void test()
 
 } // namespace normal_range
 
+// Confirm that ranges are written properly, and that they leave everything
+// in the expected state.
 namespace normal_const_range {
 
 template <typename CharT>
@@ -176,6 +193,8 @@ void test()
 
 } // namespace normal_const_range
 
+// Confirm that everything works properly, even when the source range uses
+// the most restricted class of iterators (InputIterators).
 namespace input_iterator_range {
 
 void test()
@@ -214,6 +233,8 @@ void test()
 
 } // namespace input_iterator_range
 
+// Confirm that ranges are written properly, and that formatting is preserved
+// across elements.
 namespace formatting {
 
 void test()
