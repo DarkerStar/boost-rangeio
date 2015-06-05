@@ -12,7 +12,7 @@
 
 #include <boost/core/lightweight_test.hpp>
 
-#include <boost/rangeio/detail/write_all.hpp>
+#include <boost/rangeio/detail/write.hpp>
 
 #include "extras/more_tests.hpp"
 

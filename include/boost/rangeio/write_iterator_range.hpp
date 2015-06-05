@@ -14,7 +14,7 @@
 #include <iosfwd>
 #include <utility>
 
-#include <boost/rangeio/detail/write_all.hpp>
+#include <boost/rangeio/detail/write.hpp>
 
 namespace boost {
 namespace rangeio {
