@@ -18,7 +18,7 @@
 #include "extras/more_tests.hpp"
 #include "extras/smart_delimiters.hpp"
 
-namespace write_all_delim_tests {
+namespace write_impl_delim_tests {
 
 namespace empty_range {
 
@@ -34,7 +34,7 @@ void do_test()
   std::vector<double>::iterator i = r.begin();
   std::size_t const n_init = 69;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), ",", n);
+  ::boost::rangeio::detail::write_impl(out, i, r.end(), ",", n);
   
   BOOST_TEST_EQ(n_init, n);
   BOOST_TEST(r.begin() == i);
@@ -67,7 +67,7 @@ void do_test()
   std::vector<int>::const_iterator i = r.begin();
   std::size_t const n_init = 69;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), ",", n);
+  ::boost::rangeio::detail::write_impl(out, i, r.end(), ",", n);
   
   BOOST_TEST_EQ(n_init, n);
   BOOST_TEST(r.begin() == i);
@@ -104,7 +104,7 @@ void do_test()
   int* i = r;
   std::size_t const n_init = 42;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, "::", n);
+  ::boost::rangeio::detail::write_impl(out, i, i + r_size, "::", n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(r_size, n - n_init);
@@ -154,7 +154,8 @@ void do_test()
   unsigned long const* i = r;
   std::size_t const n_init = 42;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, '-', n);
+  char const delim = '-';
+  ::boost::rangeio::detail::write_impl(out, i, i + r_size, delim, n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(r_size, n - n_init);
@@ -197,7 +198,7 @@ void test()
   std::istream_iterator<int> const e;
   std::size_t const n_init = 32;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, e, ", ", n);
+  ::boost::rangeio::detail::write_impl(out, i, e, ", ", n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(in_size, n - n_init);
@@ -240,7 +241,7 @@ void test()
   double const* i = r;
   std::size_t const n_init = 13;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, " | ", n);
+  ::boost::rangeio::detail::write_impl(out, i, i + r_size, " | ", n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(r_size, n - n_init);
@@ -255,7 +256,7 @@ void test()
 
 } // namespace formatting
 
-namespace smart_delimiter_lval {
+namespace smart_delimiter {
 
 void test()
 {
@@ -270,7 +271,7 @@ void test()
   std::string::const_iterator i = r.begin();
   std::size_t n = 0;
   ::boost::rangeio::test_extras::incrementing_integer_delimiter iid;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), iid, n);
+  ::boost::rangeio::detail::write_impl(out, i, r.end(), iid, n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(r.size(), n);
@@ -282,42 +283,13 @@ void test()
   BOOST_TEST_EQ("a0b1c2d3e4f", out.str());
 }
 
-} // namespace smart_delimiter_lval
+} // namespace smart_delimiter
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-namespace smart_delimiter_rval {
-
-void test()
-{
-  // Prepare the range to be written
-  std::string const r = "wxyz";
-  
-  // Prepare the output stream
-  std::ostringstream out;
-  out.imbue(std::locale::classic());
-  
-  // Do the write
-  std::string::const_iterator i = r.begin();
-  std::size_t n = 0;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), ::boost::rangeio::test_extras::incrementing_integer_delimiter(), n);
-  
-  // Make sure the "out" arguments were properly set
-  BOOST_TEST_EQ(r.size(), n);
-  BOOST_TEST(r.end() == i);
-  
-  // Make sure the write happened as it should have
-  BOOST_TEST(bool(out));
-  BOOST_TEST_EQ("w0x1y2z", out.str());
-}
-
-} // namespace smart_delimiter_rval
-#endif // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-
-} // namespace write_all_delim_tests
+} // namespace write_impl_delim_tests
 
 int main()
 {
-  using namespace write_all_delim_tests;
+  using namespace write_impl_delim_tests;
   
   empty_range::test();
   empty_const_range::test();
@@ -329,11 +301,7 @@ int main()
   
   formatting::test();
   
-  smart_delimiter_lval::test();
-
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-  smart_delimiter_rval::test();
-#endif // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+  smart_delimiter::test();
   
   return boost::report_errors();
 }

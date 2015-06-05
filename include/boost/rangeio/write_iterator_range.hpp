@@ -56,7 +56,7 @@ write_iterator_range_result_t<InputIterator>
 write_iterator_range(std::basic_ostream<CharT, Traits>& out, InputIterator first, Sentinel last, Delimiter& delimiter)
 {
   write_iterator_range_result_t<InputIterator> result(first);
-  ::boost::rangeio::detail::write_all(out, result.next, last, delimiter, result.count);
+  ::boost::rangeio::detail::write_impl(out, result.next, last, delimiter, result.count);
   return result;
 }
 
@@ -70,7 +70,7 @@ write_iterator_range_result_t<InputIterator>
 write_iterator_range(std::basic_ostream<CharT, Traits>& out, InputIterator first, Sentinel last, Delimiter const& delimiter)
 {
   write_iterator_range_result_t<InputIterator> result(first);
-  ::boost::rangeio::detail::write_all(out, result.next, last, delimiter, result.count);
+  ::boost::rangeio::detail::write_impl(out, result.next, last, delimiter, result.count);
   return result;
 }
 
@@ -86,7 +86,7 @@ write_iterator_range_result_t<InputIterator>
 write_iterator_range(std::basic_ostream<CharT, Traits>& out, InputIterator first, Sentinel last, Delimiter&& delimiter)
 {
   write_iterator_range_result_t<InputIterator> result(first);
-  ::boost::rangeio::detail::write_all(out, result.next, last, std::forward<Delimiter>(delimiter), result.count);
+  ::boost::rangeio::detail::write_impl(out, result.next, last, std::forward<Delimiter>(delimiter), result.count);
   return result;
 }
 
@@ -100,7 +100,7 @@ write_iterator_range_result_t<InputIterator>
 write_iterator_range(std::basic_ostream<CharT, Traits>& out, InputIterator first, Sentinel last)
 {
   write_iterator_range_result_t<InputIterator> result(first);
-  ::boost::rangeio::detail::write_all(out, result.next, last, result.count);
+  ::boost::rangeio::detail::write_impl(out, result.next, last, result.count);
   return result;
 }
 

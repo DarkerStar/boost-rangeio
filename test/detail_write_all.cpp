@@ -16,7 +16,7 @@
 
 #include "extras/more_tests.hpp"
 
-namespace write_all_tests {
+namespace write_impl_tests {
 
 namespace empty_range {
 
@@ -32,7 +32,7 @@ void do_test()
   std::vector<double>::iterator i = r.begin();
   std::size_t const n_init = 69;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), n);
+  ::boost::rangeio::detail::write_impl(out, i, r.end(), n);
   
   BOOST_TEST_EQ(n_init, n);
   BOOST_TEST(r.begin() == i);
@@ -65,7 +65,7 @@ void do_test()
   std::vector<int>::const_iterator i = r.begin();
   std::size_t const n_init = 69;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, r.end(), n);
+  ::boost::rangeio::detail::write_impl(out, i, r.end(), n);
   
   BOOST_TEST_EQ(n_init, n);
   BOOST_TEST(r.begin() == i);
@@ -102,7 +102,7 @@ void do_test()
   int* i = r;
   std::size_t const n_init = 42;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, n);
+  ::boost::rangeio::detail::write_impl(out, i, i + r_size, n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(r_size, n - n_init);
@@ -152,7 +152,7 @@ void do_test()
   unsigned long const* i = r;
   std::size_t const n_init = 42;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, n);
+  ::boost::rangeio::detail::write_impl(out, i, i + r_size, n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(r_size, n - n_init);
@@ -195,7 +195,7 @@ void test()
   std::istream_iterator<int> const e;
   std::size_t const n_init = 32;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, e, n);
+  ::boost::rangeio::detail::write_impl(out, i, e, n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(in_size, n - n_init);
@@ -238,7 +238,7 @@ void test()
   int const* i = r;
   std::size_t const n_init = 13;
   std::size_t n = n_init;
-  ::boost::rangeio::detail::write_all(out, i, i + r_size, n);
+  ::boost::rangeio::detail::write_impl(out, i, i + r_size, n);
   
   // Make sure the "out" arguments were properly set
   BOOST_TEST_EQ(r_size, n - n_init);
@@ -253,11 +253,11 @@ void test()
 
 } // namespace formatting
 
-} // namespace write_all_tests
+} // namespace write_impl_tests
 
 int main()
 {
-  using namespace write_all_tests;
+  using namespace write_impl_tests;
   
   empty_range::test();
   empty_const_range::test();
